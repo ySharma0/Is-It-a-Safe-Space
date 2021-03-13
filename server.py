@@ -3,7 +3,7 @@ from flask_cors import CORS, cross_origin
 from bs4 import BeautifulSoup
 import re
 from selenium import webdriver
-# import os
+import os
 # from sqlalchemy import create_engine, exc
 # from sqlalchemy.orm import scoped_session, sessionmaker
 
@@ -31,10 +31,12 @@ def getData():
     url = str(request.values.get("url"))
     if re.match(regex, url) is not None:
         driver.get(url)
-        soup = BeautifulSoup(driver.page_source.encode("utf-8"), "lxml")
-        return str(soup.text)
-        # return url
+        soup = BeautifulSoup(driver.page_source.encode("utf-8"), "lxml") # grab text
+        #clean text
+        soup = os.linesep.join([s for s in soup.text.splitlines() if s])
+        soup = soup.split("\n")
+        
+        return str(soup)
     else:
         return "badly formatted url"
 
-   
