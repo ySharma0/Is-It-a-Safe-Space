@@ -7,6 +7,11 @@ from selenium import webdriver
 # from sqlalchemy import create_engine, exc
 # from sqlalchemy.orm import scoped_session, sessionmaker
 
+# setup selenium chrome
+options = webdriver.ChromeOptions()
+options.binary_location = "/app/.apt/usr/bin/google-chrome-stable"
+options.add_argument("--headless")
+driver = webdriver.Chrome(chrome_options=options)
 
 regex = re.compile(
         r'^(?:http|ftp)s?://' # http:// or https://
@@ -25,11 +30,9 @@ def index():
 def getData():
     url = str(request.values.get("url"))
     if re.match(regex, url) is not None:
-        options = webdriver.ChromeOptions()
-        options.binary_location = "/app/.apt/usr/bin/google-chrome-stable"
-        driver = webdriver.Chrome(chrome_options=options)
-        # soup = BeautifulSoup(results.html.html, "lxml")
-        return str("hi")
+        driver.get(url)
+        soup = driver.page_source.encode("utf-8")
+        return str(soup)
         # return url
     else:
         return "badly formatted url"
