@@ -1,17 +1,13 @@
-from flask import Flask, request
+from flask import Flask, request, Response
 from flask_cors import CORS, cross_origin
 from bs4 import BeautifulSoup
-from requests_html import HTMLSession
 import re
-
-
+from selenium import webdriver
+# import os
 # from sqlalchemy import create_engine, exc
 # from sqlalchemy.orm import scoped_session, sessionmaker
-import os
 
 
-app = Flask(__name__)
-session = HTMLSession()
 regex = re.compile(
         r'^(?:http|ftp)s?://' # http:// or https://
         r'(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,6}\.?|[A-Z0-9-]{2,}\.?)|' #domain...
@@ -20,19 +16,21 @@ regex = re.compile(
         r'(?::\d+)?' # optional port
         r'(?:/?|[/?]\S+)$', re.IGNORECASE)
 
+app = Flask(__name__)
 @app.route("/")
 def index():
     return ("hello")
    
-
 @app.route("/getData")
 def getData():
     url = str(request.values.get("url"))
     if re.match(regex, url) is not None:
-        resp = session.get(url)
-        resp.html.render()
-        soup = BeautifulSoup(resp.html.html, "lxml")
-        return soup.text
+        # options = ChromeOptions()
+        # options.binary_location = "/app/.apt/usr/bin/google-chrome-stable"
+        # driver = webdriver.Chrome(chrome_options=options)
+        # soup = BeautifulSoup(results.html.html, "lxml")
+        return str(soup)
+        # return url
     else:
         return "badly formatted url"
 
