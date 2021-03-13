@@ -25,7 +25,7 @@ def index():
 def getData():
     url = str(request.values.get("url"))
     if re.match(regex, url) is not None:
-        options = ChromeOptions()
+        options = webdriver.ChromeOptions()
         options.binary_location = "/app/.apt/usr/bin/google-chrome-stable"
         driver = webdriver.Chrome(chrome_options=options)
         # soup = BeautifulSoup(results.html.html, "lxml")
