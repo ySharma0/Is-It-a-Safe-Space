@@ -31,8 +31,8 @@ def getData():
     url = str(request.values.get("url"))
     if re.match(regex, url) is not None:
         driver.get(url)
-        soup = driver.page_source.encode("utf-8")
-        return str(soup)
+        soup = BeautifulSoup(driver.page_source.encode("utf-8"), "lxml")
+        return str(soup.text)
         # return url
     else:
         return "badly formatted url"
