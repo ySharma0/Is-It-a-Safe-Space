@@ -29,7 +29,7 @@ def getData():
         options.binary_location = "/app/.apt/usr/bin/google-chrome-stable"
         driver = webdriver.Chrome(chrome_options=options)
         # soup = BeautifulSoup(results.html.html, "lxml")
-        return str(soup)
+        return str("hi")
         # return url
     else:
         return "badly formatted url"
