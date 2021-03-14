@@ -5,7 +5,6 @@ from selenium import webdriver
 import os
 from sqlalchemy import create_engine, exc
 from sqlalchemy.orm import scoped_session, sessionmaker
-import torch
 
 if not os.getenv("DATABASE_URL"):
     raise RuntimeError("DATBASE_URL is not set")
@@ -42,7 +41,7 @@ def index():
 @app.route("/getData")
 def getData():
     url = str(request.values.get("url"))
-    
+    print(url)
     if re.match(regex, url) is not None:
         x = db.execute("select type, freq from urls where url='"+url+"';").fetchone()
         if x:
