@@ -7,7 +7,7 @@ import os
 # from sqlalchemy import create_engine, exc
 # from sqlalchemy.orm import scoped_session, sessionmaker
 
-# setup selenium chrome
+setup selenium chrome
 options = webdriver.ChromeOptions()
 options.binary_location = "/app/.apt/usr/bin/google-chrome-stable"
 options.add_argument("--headless")

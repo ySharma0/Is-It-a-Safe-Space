@@ -1,4 +1,10 @@
 {% extends "layout.html" %} {% block title %} TEST {% endblock %} {% block body
 %}
 <p>Hello Worldddddd!!!!</p>
+<ul>
+    {% for a in arr %}
+        <li> {{a[0]}} {{a[1]}}</li>
+    {% endfor %}
+</ul>
+
 {% endblock %}
