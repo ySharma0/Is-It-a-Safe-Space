@@ -1,7 +1,8 @@
 from flask import Flask, request, Response, render_template, redirect, jsonify
 from bs4 import BeautifulSoup
 import re
-from selenium import webdriver
+import requests
+# from selenium import webdriver
 import os
 from sqlalchemy import create_engine, exc
 from sqlalchemy.orm import scoped_session, sessionmaker
@@ -14,11 +15,11 @@ if not os.getenv("DATABASE_URL"):
 engine = create_engine(os.getenv("DATABASE_URL"))
 db = scoped_session(sessionmaker(bind=engine))
 
-# setup selenium chrome
-options = webdriver.ChromeOptions()
-options.binary_location = "/app/.apt/usr/bin/google-chrome-stable"
-options.add_argument("--headless")
-driver = webdriver.Chrome(chrome_options=options)
+# # setup selenium chrome
+# options = webdriver.ChromeOptions()
+# options.binary_location = "/app/.apt/usr/bin/google-chrome-stable"
+# options.add_argument("--headless")
+# driver = webdriver.Chrome(chrome_options=options)
 
 
 regex = re.compile(
@@ -47,8 +48,10 @@ def getData():
             db.commit()
             return str(x[0])
             
-        driver.get(url)
-        soup = BeautifulSoup(driver.page_source.encode("utf-8"), "lxml") # grab text
+        # driver.get(url)
+        res = requests.get(url)
+        html_page = res.content
+        soup = BeautifulSoup(html_page, "lxml") # grab text
         #clean text
         soup = os.linesep.join([s for s in soup.text.splitlines() if s])
         soup = soup.split("\n")
