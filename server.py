@@ -1,4 +1,4 @@
-from flask import Flask, request, Response
+from flask import Flask, request, Response, render_template, redirect
 from flask_cors import CORS, cross_origin
 from bs4 import BeautifulSoup
 import re
@@ -24,7 +24,7 @@ regex = re.compile(
 app = Flask(__name__)
 @app.route("/")
 def index():
-    return ("hello")
+    return render_template("index.html")
    
 @app.route("/getData")
 def getData():
