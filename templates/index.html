@@ -125,7 +125,7 @@
           margin-top: 0;
         }
       </style>
-      <div class="RNNXgb" jsname="RNNXgb">
+      <!-- <div class="RNNXgb" jsname="RNNXgb">
         <div class="SDkEP">
           <div
             jscontroller="iDPoPb"
@@ -170,7 +170,7 @@
               }
             </style>
             <div class="pR49Ae gsfi" jsname="vdLsw"></div>
-            <input
+            <!-- <input
               class="gLFyf gsfi"
               jsaction="paste:puy29d;"
               maxlength="2048"
@@ -189,7 +189,8 @@
               aria-label="Search"
               data-ved="0ahUKEwiI5_avkK7vAhVIvJ4KHVRDBWcQ39UDCAY"
               id="search-bar"
-            />
+            /> -->
+<!--             
           </div>
         </div>
       </div>
@@ -206,6 +207,15 @@
           />
         </center>
       </div>
-    </div>
+    </div>  -->
+    <center>
+      <form  action = "{{url_for('getData')}}" method = "post" class = "form-group">                       
+      <label for="url">Enter a URL: </label>
+      <input type ="text" class = "form-control" id = "url" name = "url" required>  
+    
+    <button type ="submit" class = "btn btn-primary" id = "submit-btn">Search safety</button>
+    </form>
+  </center>
+  
   </body>
 </html>
