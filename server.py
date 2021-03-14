@@ -64,8 +64,10 @@ def getData():
         
         db.execute("INSERT INTO urls VALUES(:url, :type, :freq)",{"url":url, "type": classification, "freq": 1})
         db.commit()      
-
-        return render_template("index.html", Classification=str(classification))
+        if classification == "safe":
+            return render_template("index.html", Classification=str("Your Site is SAFE"))
+        else:
+            return render_template("index.html", Classification=str("Your Site is NOT SAFE"))
     else:
         return render_template("index.html",str("Badly Formatted URL"))
          
