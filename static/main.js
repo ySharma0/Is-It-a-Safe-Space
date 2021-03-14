@@ -1,7 +1,8 @@
 
 
 function checkURL(){
-    axios.get("/getData?url=" + document.getElementById("search-bar").value).then(resp => {
+    url = document.getElementById("search-bar").value
+    axios.get("/getData?url=" + url).then(resp => {
 
         resp = resp.data
         // if(resp = "success"){
