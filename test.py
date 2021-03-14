@@ -116,6 +116,7 @@ class Merger():
         return tokens
 
 def model_call(textList):
+    dataset = Merger( './new_data.csv', 50)
     model = NLP_model(vocab = dataset.vocab, emb_size = 50, num_classes = 3)
     params_loaded = torch.load('my_model_weights.pt')
     # print(sample)
@@ -133,7 +134,6 @@ def model_call(textList):
     other_count = 0
     for i in textList:
         sample = str(i)
-        dataset = Merger( './new_data.csv', 50)
         word_tokens = dataset.preprocess_input(sample)
         tokens = dataset.word_tokens_to_tensor(word_tokens)
         preds = model(tokens).squeeze()
