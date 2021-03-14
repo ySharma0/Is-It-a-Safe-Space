@@ -33,7 +33,7 @@ regex = re.compile(
 app = Flask(__name__)
 @app.route("/")
 def index():
-    return render_template("index.html")
+    return render_template("index.html", Classification="")
 
 
 
@@ -65,9 +65,9 @@ def getData():
         db.execute("INSERT INTO urls VALUES(:url, :type, :freq)",{"url":url, "type": classification, "freq": 1})
         db.commit()      
 
-        return str(classification)
+        return render_template("index.html", Classification=str(classification))
     else:
-        return str("Badly Formatted URL")
+        return render_template("index.html",str("Badly Formatted URL"))
          
 
 @app.route("/getSafeSites")
