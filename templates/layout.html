@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %} {% endblock %}</title>
+  </head>
+  <body>
+    <img src="../static/IIASS.jpg" class="center" />
+    <style>
+      body {
+        background-color: rgb(241, 241, 241);
+      }
+      .center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 49%;
+      }
+    </style>
+    {% block body %} {% endblock %}
+  </body>
+</html>
