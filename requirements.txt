@@ -1,3 +1,4 @@
+https://download.pytorch.org/whl/cpu/torch-1.1.0-cp36-cp36m-linux_x86_64.whl
 appdirs==1.4.4
 beautifulsoup4==4.9.3
 bs4==0.0.1
@@ -31,7 +32,7 @@ urllib3==1.26.3
 w3lib==1.22.0
 websockets==8.1
 Werkzeug==1.0.1
-https://download.pytorch.org/whl/cpu/torch-1.1.0-cp36-cp36m-linux_x86_64.whl
+
 
 
 
