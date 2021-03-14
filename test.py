@@ -28,9 +28,9 @@ class NLP_model(nn.Module):
         self.emb_size = emb_size
         self.emb = nn.Embedding(self.num_words, self.emb_size)
         self.emb.from_pretrained(vocab.vectors)
-        self.lstm = nn.LSTM(input_size = emb_size, hidden_size = 32, batch_first = True, num_layers = 2)
+        self.lstm = nn.LSTM(input_size = emb_size, hidden_size = 32, batch_first = True, num_layers = 2, bidirectional=True)
         self.relu = nn.ReLU()
-        self.lin = nn.Linear(64, num_classes)
+        self.lin = nn.Linear(128, num_classes)
         
     def forward(self, batch_data):
         token_embs = self.emb(batch_data)
@@ -116,22 +116,22 @@ class Merger():
         tokens = word_tokenize(text)
         return tokens
 
-sample = "Hello World this is Hackmerced"
+sample = "hackmerced"
 dataset = Merger( './new_data.csv', 50)
 word_tokens = dataset.preprocess_input(sample)
 tokens = dataset.word_tokens_to_tensor(word_tokens)
-# print(sample)
-# print(word_tokens)
-# print(tokens)
-# print(tokens.shape)
-# print(dataset.back_to_text(tokens))
+print(sample)
+print(word_tokens)
+print(tokens)
+print(tokens.shape)
+print(dataset.back_to_text(tokens[0]))
 model = NLP_model(vocab = dataset.vocab, emb_size = 50, num_classes = 3)
 params_loaded = torch.load('my_model_weights.pt')
 print(model.load_state_dict(params_loaded))
 preds = model(tokens).squeeze()
 print(preds.shape)
 print(preds)
-softmaxed_preds = preds.softmax(dim = 0)
+softmaxed_preds = preds.softmax(dim=0)
 class_pred = softmaxed_preds.argmax().item()
 print(softmaxed_preds)
 print(class_pred)
