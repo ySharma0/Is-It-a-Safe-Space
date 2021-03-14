@@ -5,13 +5,13 @@ import torch
 
 app = Flask(__name__)
 
-def runModel():
-    model = nlpmodel
-    params_loaded = torch.load('my_model_weights.pt')
+# def runModel():
+#     model = nlpmodel
+#     params_loaded = torch.load('my_model_weights.pt')
 
-    model2.load_state_dict(params_loaded)
+#     model2.load_state_dict(params_loaded)
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    return "hi"
    
