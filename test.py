@@ -57,6 +57,11 @@ class Merger():
             "offensive language" : 1,
             "other": 2
         }
+        self.reverse_label_dict = {
+            0: "hate speech",
+            1: "offensive language",
+            2: "other"
+        }
         self.dataframe['tweet_token'] = self.dataframe['tweet'].apply(lambda x: word_tokenize(x))
         
         all_mentioned_words = []
@@ -130,4 +135,4 @@ softmaxed_preds = preds.softmax(dim = 0)
 class_pred = softmaxed_preds.argmax().item()
 print(softmaxed_preds)
 print(class_pred)
-print(dataset.label_dict[class_pred])
+print(dataset.reverse_label_dict[class_pred])
