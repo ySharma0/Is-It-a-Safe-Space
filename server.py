@@ -63,7 +63,7 @@ def getData():
         db.execute("INSERT INTO urls VALUES(:url, :type, :freq)",{"url":url, "type": classification, "freq": 1})
         db.commit()      
 
-        return str(classification)
+        return str(soup)
     else:
         return str("Badly Formatted URL")
          

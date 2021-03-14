@@ -5,7 +5,7 @@ function checkURL(){
 
         resp = resp.data
         // if(resp = "success"){
-            alert("Your listed URL is " + resp)
+            console.log("Your listed URL is " + resp)
 
         // }else{
 
