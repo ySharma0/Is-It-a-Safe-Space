@@ -49,6 +49,8 @@ def getData():
         soup = soup.split("\n")
         
         #push url to db
+        # 0 : hate speech    1 : profainity   2 : neither
+        
         classification = "safe"
         db.execute("INSERT INTO urls VALUES(:url, :type, :freq)",{"url":url, "type": classification, "freq": 1})
         db.commit()      
