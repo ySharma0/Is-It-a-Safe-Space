@@ -22,9 +22,9 @@ import os
 
 
 class NLP_model(nn.Module):
-    def __init__(self, num_words, emb_size, num_classes):
+    def __init__(self, vocab, emb_size, num_classes):
         super().__init__()
-        self.num_words = num_words
+        self.num_words = len(vocab)
         self.emb_size = emb_size
         self.emb = nn.Embedding(self.num_words, self.emb_size)
         self.emb.from_pretrained(vocab.vectors)
@@ -119,7 +119,9 @@ tokens = dataset.word_tokens_to_tensor(word_tokens)
 # print(tokens)
 # print(tokens.shape)
 # print(dataset.back_to_text(tokens))
-model = NLP_model(num_words = len(dataset.vocab), emb_size = 50, num_classes = 3)
+model = NLP_model(vocab = dataset.vocab, emb_size = 50, num_classes = 3)
+params_loaded = torch.load('my_model_weights.pt')
+print(model.load_state_dict(params_loaded))
 preds = model(tokens)
 print(preds.shape)
 print(preds)
