@@ -5,8 +5,8 @@ from selenium import webdriver
 import os
 from sqlalchemy import create_engine, exc
 from sqlalchemy.orm import scoped_session, sessionmaker
-from test import model_call
 os.system('pip install torch==1.8.0+cpu -f https://download.pytorch.org/whl/torch_stable.html')
+from test import model_call
 
 if not os.getenv("DATABASE_URL"):
     raise RuntimeError("DATBASE_URL is not set")
