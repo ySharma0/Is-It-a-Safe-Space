@@ -47,11 +47,13 @@ def getData():
         if x:
             db.execute("UPDATE urls SET freq="+ str(x[1]+1) + "where url='"+url+"';")
             db.commit()
+            print("hi")
             return str(x[0])
             
         # driver.get(url)
         soup = BeautifulSoup(driver.page_source.encode("utf-8"), "lxml") # grab text
         #clean text
+        return str(soup)
         soup = os.linesep.join([s for s in soup.text.splitlines() if s])
         soup = soup.split("\n")
         
