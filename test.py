@@ -115,25 +115,39 @@ class Merger():
         tokens = word_tokenize(text)
         return tokens
 
-def model_call(sample):
-    sample = str(sample)
-    dataset = Merger( './new_data.csv', 50)
-    word_tokens = dataset.preprocess_input(sample)
-    tokens = dataset.word_tokens_to_tensor(word_tokens)
+def model_call(textList):
+    model = NLP_model(vocab = dataset.vocab, emb_size = 50, num_classes = 3)
+    params_loaded = torch.load('my_model_weights.pt')
     # print(sample)
     # print(word_tokens)
     # print(tokens)
     # print(tokens.shape)
     # print(dataset.back_to_text(tokens[0]))
-    model = NLP_model(vocab = dataset.vocab, emb_size = 50, num_classes = 3)
-    params_loaded = torch.load('my_model_weights.pt')
     # print(model.load_state_dict(params_loaded))
-    preds = model(tokens).squeeze()
     # print(preds.shape)
     # print(preds)
-    softmaxed_preds = preds.softmax(dim=0)
-    class_pred = softmaxed_preds.argmax().item()
     # print(softmaxed_preds)
     # print(class_pred)
-    return class_pred
+    hate_count = 0
+    prof_count = 0
+    for i in textList:
+        sample = str(i)
+        dataset = Merger( './new_data.csv', 50)
+        word_tokens = dataset.preprocess_input(sample)
+        tokens = dataset.word_tokens_to_tensor(word_tokens)
+        preds = model(tokens).squeeze()
+        softmaxed_preds = preds.softmax(dim=0)
+        class_pred = softmaxed_preds.argmax().item()
+        if class_pred == 0:
+            hate_count+=1
+        if class_pred == 1:
+            prof_count +=1
+    
+    if (prof_count+hate_count)/len(textList) < 0.1:
+        return "safe"
+    else:
+        if prof_count > hate_count: 
+            return "profanity"
+        else:
+            return "hate"
     # return dataset.reverse_label_dict[class_pred]

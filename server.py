@@ -60,24 +60,12 @@ def getData():
         # 0 : hate speech    1 : profainity   2 : neither
         prof_count = 0
         hate_count = 0
-        for i in soup:
-            class_type = model_call(str(i))
-            if class_type == 0:
-                hate_count+=1
-            if class_type == 1:
-                prof_count +=1
+        classification = model_call(soup)
         
-        if (prof_count+hate_count)/len(soup) < 0.3:
-            classification = "safe"
-        else:
-            if prof_count > hate_count: 
-                classification = "profanity"
-            else:
-                classification = "hate"
         db.execute("INSERT INTO urls VALUES(:url, :type, :freq)",{"url":url, "type": classification, "freq": 1})
         db.commit()      
 
-        return str(soup)
+        return str(classification)
     else:
         return str("Badly Formatted URL")
          
