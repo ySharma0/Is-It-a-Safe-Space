@@ -40,7 +40,7 @@ def index():
 
 @app.route("/getData")
 def getData():
-    url = str(request.values.get("url"))
+    url = str(request.form.get("url"))
     print(url)
     if re.match(regex, url) is not None:
         x = db.execute("select type, freq from urls where url='"+url+"';").fetchone()
