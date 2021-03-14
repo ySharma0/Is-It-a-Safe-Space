@@ -38,7 +38,7 @@ def index():
 #     model2.load_state_dict(params_loaded)
 
 
-@app.route("/getData", methods=["GET, POST"])
+@app.route("/getData", methods=["GET", "POST"])
 def getData():
     url = str(request.form.get("url"))
     print(url)
