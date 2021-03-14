@@ -130,6 +130,7 @@ def model_call(textList):
     # print(class_pred)
     hate_count = 0
     prof_count = 0
+    other_count = 0
     for i in textList:
         sample = str(i)
         dataset = Merger( './new_data.csv', 50)
@@ -140,14 +141,16 @@ def model_call(textList):
         class_pred = softmaxed_preds.argmax().item()
         if class_pred == 0:
             hate_count+=1
-        if class_pred == 1:
+        elif class_pred == 1:
             prof_count +=1
-    
-    if (prof_count+hate_count)/len(textList) < 0.1:
-        return "safe"
-    else:
-        if prof_count > hate_count: 
-            return "profanity"
         else:
-            return "hate"
+            other_count +=1
+    return ("profanity:"+str(prof_count) + " hate:" + str(hate_count) + "other:" + str(other_count))
+    # if (prof_count+hate_count)/len(textList) < 0.1:
+    #     return "safe"
+    # else:
+    #     if prof_count > hate_count: 
+    #         return "profanity"
+    #     else:
+    #         return "hate"
     # return dataset.reverse_label_dict[class_pred]
