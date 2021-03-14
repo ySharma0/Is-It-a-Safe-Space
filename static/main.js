@@ -2,12 +2,14 @@
 
 function checkURL(){
     url = document.getElementById("search-bar").value
-    console.log(url)
-    axios.get("/getData?url=" + url).then(resp => {
+    console.log(String(url))
+
+    axios.get("/getData?url=" + (String(url)).then(resp => {
 
         resp = resp.data
         // if(resp = "success"){
-            document.write("<p>"+ resp +"</p>")
+            console.log("<p>"+ resp +"</p>")
+
         // }else{
 
         // }
