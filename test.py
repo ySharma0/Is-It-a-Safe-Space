@@ -1,9 +1,4 @@
 
-# import pip3
-# installed_packages = pip3.get_installed_distributions()
-# installed_packages_list = sorted(["%s==%s" % (i.key, i.version)
-#      for i in installed_packages])
-# print(installed_packages_list)
 from torch import nn
 import torchtext
 import torch
@@ -15,7 +10,7 @@ from nltk import PorterStemmer
 from nltk import WordNetLemmatizer
 from nltk.corpus import stopwords
 from nltk import TweetTokenizer
-from sklearn.feature_extraction.text import CountVectorizer
+# from sklearn.feature_extraction.text import CountVectorizer
 
 nltk.download('punkt')
 nltk.download('stopwords')
@@ -49,9 +44,77 @@ class NLP_model(nn.Module):
         logits = self.lin(last_hidden_state)
         
         return logits
-def preprocess_input(text):
-    text = text.lower()
-    tokens = word_tokenize(text)
-    print(text)
+        
+from collections import Counter
+class Merger():
+    
+    def __init__(self, csv_path, max_length):
+        self.dataframe = pd.read_csv(csv_path)
+        self.max_length = max_length
+        self.label_dict = {
+            "hate speech" : 0,
+            "offensive language" : 1,
+            "other": 2
+        }
+        self.dataframe['tweet_token'] = self.dataframe['tweet'].apply(lambda x: word_tokenize(x))
+        
+        all_mentioned_words = []
+        for words in dataframe['tweet_token']:
+            all_mentioned_words += words
+        frequency = Counter(all_mentioned_words)
+        self.vocab = torchtext.vocab.Vocab(counter = frequency, min_freq = 25, vectors = glove)
+        
+        
+#         print(self.dataframe.head())
+
+    def __len__(self):
+        return len(self.dataframe['tweet'])
+    
+    def back_to_text(self, tokens):
+        text = ''
+        for tok in tokens:
+            text += self.vocab.itos[tok] + " "
+        return text
+    
+    
+    def __getitem__(self, index):
+        label = self.label_dict[self.dataframe['class'][index]]
+        label = torch.tensor(label)
+        int_tokens = []
+        tweet_tokens = self.dataframe['tweet_token'][index]
+        for token in tweet_tokens:
+            int_tokens.append(self.vocab[token])
+        if(len(int_tokens) < self.max_length):
+            num_to_pad = self.max_length - len(int_tokens)
+            int_tokens += [0] * num_to_pad
+        else:
+            int_tokens = int_tokens[:self.max_length]
+        int_tokens = torch.tensor(int_tokens)
+        return(int_tokens, label)
+
+    def word_tokens_to_tensor(self, word_tokens):
+        int_tokens=[]
+        for token in word_tokens:
+            int_tokens.append(self.vocab[token])
+        if(len(int_tokens) < self.max_length):
+            num_to_pad = self.max_length - len(int_tokens)
+            int_tokens += [0] * num_to_pad
+        else:
+            int_tokens = int_tokens[:self.max_length]
+        int_tokens = torch.tensor(int_tokens)
+        return int_tokens
+
+    def preprocess_input(self, text):
+        text = text.lower()
+        tokens = word_tokenize(text)
+        return tokens
+
 sample = "Hello World this is Hackmerced"
-preprocess_input(sample)
+dataset = Merger( './new_data.csv', 50)
+word_tokens = dataset.preprocess_input(sample)
+tokens = dataset.word_tokens_to_tensor(word_tokens)
+print(sample)
+print(word_tokens)
+print(tokens)
+print(tokens.shape)
+print(dataset.back_to_text(tokens))
