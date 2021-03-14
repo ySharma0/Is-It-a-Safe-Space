@@ -145,7 +145,7 @@ def model_call(textList):
             prof_count +=1
         else:
             other_count +=1
-    if (profanity + hate_count) > other:
+    if (prof_count + hate_count) > other_count:
         return ("profanity")
     else:
         return ("safe")
