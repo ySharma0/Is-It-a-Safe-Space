@@ -5,9 +5,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{% block title %} {% endblock %}</title>
+    <link rel="stylesheet" href="../static/navbar.css">
+    <script src="../static/redirect.js"></script>
   </head>
   <body>
-    <img src="../static/IIASS.jpg" class="center" />
+    <ul>
+      <li><a href="/">Check Space</a></li>
+      <li><a href="/getSafeSites">Safe Spaces</a></li>
+      <li><a href="/getDangerSites">Danger Zone</a></li>
+      <li style="float:right"><a href="/getAbout">About</a></li>
+    </ul>
+    <img src="../static/IIASS.jpg" class="center" style="padding-top: 0.05%";/>
     <style>
       body {
         background-color: rgb(241, 241, 241);

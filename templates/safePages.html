@@ -1,25 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Safe Page</title>
-    <script src="../static/main.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  </head>
-  <body>
-    <img src="../static/IIASS.jpg" class="center" />
-    <style>
-      body {
-        background-color: rgb(241, 241, 241);
-      }
-      .center {
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-        width: 50%;
-      }
-    </style>
-  </body>
-</html>
+{% extends "layout.html" %} {% block title %} TEST {% endblock %} {% block body
+  %}
+  <h1 style="text-align: center">Safe Spaces For You To Visit</h1>
+  <link rel="stylesheet" href="../static/listDatabase.css">
+  
+  <table class="styled-table" >
+      <thead>
+          <tr>
+              <th>Rank</th>
+              <th>Address</th>
+              <th>Frequency Searched</th>
+          </tr>
+      </thead>
+      <tbody>
+          
+              {% for a in range(arr|length) %}
+              <tr class="active-row">
+                  <td>{{a}}</td>
+                  <td>{{arr[a][0]}}</td>
+                  <td>{{arr[a][1]}}</td>
+              </tr>
+              {% endfor %}
+          
+      </tbody>
+      
+  </table>
+  
+  {% endblock %}
+  

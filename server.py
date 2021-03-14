@@ -42,7 +42,7 @@ def getData():
             db.commit()
             return str(x[0])
             
-        driver.get(url)
+        # driver.get(url)
         soup = BeautifulSoup(driver.page_source.encode("utf-8"), "lxml") # grab text
         #clean text
         soup = os.linesep.join([s for s in soup.text.splitlines() if s])
@@ -51,7 +51,7 @@ def getData():
         #push url to db
         # 0 : hate speech    1 : profainity   2 : neither
         
-        classification = "safe"
+        classification = "profanity"
         db.execute("INSERT INTO urls VALUES(:url, :type, :freq)",{"url":url, "type": classification, "freq": 1})
         db.commit()      
 
@@ -60,4 +60,17 @@ def getData():
         return str("Badly Formatted URL")
          
 
+@app.route("/getSafeSites")
+def getSafeSites():
+    x = db.execute("select url, freq from urls where type='safe' order by freq desc;").fetchall()
+    return render_template("safePages.html", arr=x)
 
+@app.route("/getDangerSites")
+def getDangerSites():
+    w = db.execute("select url, freq, type from urls where type='profanity' or type='hate' order by freq desc;").fetchall()
+    return render_template("unsafePages.html", arr=w)
+
+@app.route("/getAbout")
+def getAbout():
+    print("hi")
+    return render_template("AboutUs.html")

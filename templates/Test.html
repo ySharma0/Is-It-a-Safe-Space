@@ -1,18 +1,9 @@
 {% extends "layout.html" %} {% block title %} TEST {% endblock %} {% block body
 %}
 <p>Hello Worldddddd!!!!</p>
-<style>
-    .content-table{
-        border-collapse: collapse;
-        margin: 25px 0;
-        font-size: 0.9em;
-        font-family: sans-serif;
-        min-width: 400px;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-    }
-</style>
+<link rel="stylesheet" href="../static/listDatabase.css">
 
-<table class="content-table">
+<table class="styled-table">
     <thead>
         <tr>
             <th>Rank</th>
@@ -21,13 +12,15 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
-            {% for a in range(len(arr)) %}
+        
+            {% for a in range(arr|length) %}
+            <tr class="active-row">
                 <td>{{a}}</td>
                 <td>{{arr[a][0]}}</td>
                 <td>{{arr[a][1]}}</td>
+            </tr>
             {% endfor %}
-        </tr>
+        
     </tbody>
     
 </table>
