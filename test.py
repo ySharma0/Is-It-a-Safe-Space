@@ -49,6 +49,7 @@ from collections import Counter
 class Merger():
     
     def __init__(self, csv_path, max_length):
+        glove = torchtext.vocab.GloVe(name='6B',dim=50)
         self.dataframe = pd.read_csv(csv_path)
         self.max_length = max_length
         self.label_dict = {
@@ -59,7 +60,7 @@ class Merger():
         self.dataframe['tweet_token'] = self.dataframe['tweet'].apply(lambda x: word_tokenize(x))
         
         all_mentioned_words = []
-        for words in dataframe['tweet_token']:
+        for words in self.dataframe['tweet_token']:
             all_mentioned_words += words
         frequency = Counter(all_mentioned_words)
         self.vocab = torchtext.vocab.Vocab(counter = frequency, min_freq = 25, vectors = glove)
