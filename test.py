@@ -103,6 +103,7 @@ class Merger():
         else:
             int_tokens = int_tokens[:self.max_length]
         int_tokens = torch.tensor(int_tokens)
+        int_tokens = int_tokens.unsqueeze(0)
         return int_tokens
 
     def preprocess_input(self, text):
