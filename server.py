@@ -46,7 +46,7 @@ def getData():
         if x:
             db.execute("UPDATE urls SET freq="+ str(x[1]+1) + "where url='"+url+"';")
             db.commit()
-            return render_template("index.html", Classification=str(x[0]) )
+            return render_template("index.html", Classification=str("Your site contains: " + str(x[0]) ))
             
         # driver.get(url)
         res = requests.get(url)
