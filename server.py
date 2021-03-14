@@ -5,6 +5,7 @@ from selenium import webdriver
 import os
 from sqlalchemy import create_engine, exc
 from sqlalchemy.orm import scoped_session, sessionmaker
+import torch
 
 if not os.getenv("DATABASE_URL"):
     raise RuntimeError("DATBASE_URL is not set")
@@ -31,6 +32,13 @@ app = Flask(__name__)
 def index():
     return render_template("index.html")
    
+# def runModel():
+#     model = nlpmodel
+#     params_loaded = torch.load('my_model_weights.pt')
+
+#     model2.load_state_dict(params_loaded)
+
+
 @app.route("/getData")
 def getData():
     url = str(request.values.get("url"))
