@@ -1,4 +1,4 @@
-from flask import Flask, request, Response, render_template, redirect
+from flask import Flask, request, Response, render_template, redirect, jsonify
 from bs4 import BeautifulSoup
 import re
 from selenium import webdriver
@@ -13,10 +13,10 @@ engine = create_engine(os.getenv("DATABASE_URL"))
 db = scoped_session(sessionmaker(bind=engine))
 
 # setup selenium chrome
-# options = webdriver.ChromeOptions()
-# options.binary_location = "/app/.apt/usr/bin/google-chrome-stable"
-# options.add_argument("--headless")
-# driver = webdriver.Chrome(chrome_options=options)
+options = webdriver.ChromeOptions()
+options.binary_location = "/app/.apt/usr/bin/google-chrome-stable"
+options.add_argument("--headless")
+driver = webdriver.Chrome(chrome_options=options)
 
 regex = re.compile(
         r'^(?:http|ftp)s?://' # http:// or https://
@@ -38,22 +38,24 @@ def getData():
     if re.match(regex, url) is not None:
         x = db.execute("select type, freq from urls where url='"+url+"';").fetchone()
         if x:
+            db.execute("UPDATE urls SET freq="+ str(x[1]+1) + "where url='"+url+"';")
+            db.commit()
+            return str(x[0])
             
-        # driver.get(url)
-        # soup = BeautifulSoup(driver.page_source.encode("utf-8"), "lxml") # grab text
-        # #clean text
-        # soup = os.linesep.join([s for s in soup.text.splitlines() if s])
-        # soup = soup.split("\n")
+        driver.get(url)
+        soup = BeautifulSoup(driver.page_source.encode("utf-8"), "lxml") # grab text
+        #clean text
+        soup = os.linesep.join([s for s in soup.text.splitlines() if s])
+        soup = soup.split("\n")
         
-        # #push url to db
-        # classification = "safe"
-        # db.execute("INSERT INTO urls VALUES(:url, :type, :freq)",{"url":url, "type": classification, "freq": 1})
-        # db.commit()
-        
+        #push url to db
+        classification = "safe"
+        db.execute("INSERT INTO urls VALUES(:url, :type, :freq)",{"url":url, "type": classification, "freq": 1})
+        db.commit()      
 
-        return str("Badly Formatted URL")
+        return str(classification)
     else:
-        return url
+        return str("Badly Formatted URL")
          
 
 
