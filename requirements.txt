@@ -15,6 +15,7 @@ Jinja2==2.11.3
 lxml==4.6.2
 MarkupSafe==1.1.1
 parse==1.19.0
+psycopg2-binary==2.8.6
 pyee==8.1.0
 pyppeteer==0.2.5
 pyquery==1.4.3

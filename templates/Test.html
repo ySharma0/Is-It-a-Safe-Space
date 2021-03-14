@@ -1,10 +1,35 @@
 {% extends "layout.html" %} {% block title %} TEST {% endblock %} {% block body
 %}
 <p>Hello Worldddddd!!!!</p>
-<ul>
-    {% for a in arr %}
-        <li> {{a[0]}} {{a[1]}}</li>
-    {% endfor %}
-</ul>
+<style>
+    .content-table{
+        border-collapse: collapse;
+        margin: 25px 0;
+        font-size: 0.9em;
+        font-family: sans-serif;
+        min-width: 400px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    }
+</style>
+
+<table class="content-table">
+    <thead>
+        <tr>
+            <th>Rank</th>
+            <th>Address</th>
+            <th>Frequency Searched</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            {% for a in range(len(arr)) %}
+                <td>{{a}}</td>
+                <td>{{arr[a][0]}}</td>
+                <td>{{arr[a][1]}}</td>
+            {% endfor %}
+        </tr>
+    </tbody>
+    
+</table>
 
 {% endblock %}
