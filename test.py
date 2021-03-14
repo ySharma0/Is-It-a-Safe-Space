@@ -5,7 +5,27 @@
 #      for i in installed_packages])
 # print(installed_packages_list)
 from torch import nn
+import torchtext
 import torch
+
+import nltk
+from nltk import sent_tokenize 
+from nltk import word_tokenize
+from nltk import PorterStemmer
+from nltk import WordNetLemmatizer
+from nltk.corpus import stopwords
+from nltk import TweetTokenizer
+from sklearn.feature_extraction.text import CountVectorizer
+
+nltk.download('punkt')
+nltk.download('stopwords')
+nltk.download('wordnet')
+
+import numpy as np # linear algebra
+import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
+import os
+
+
 class NLP_model(nn.Module):
     def __init__(self, num_words, emb_size, num_classes):
         super().__init__()
@@ -30,6 +50,8 @@ class NLP_model(nn.Module):
         
         return logits
 def preprocess_input(text):
+    text = text.lower()
+    tokens = word_tokenize(text)
     print(text)
 sample = "Hello World this is Hackmerced"
 preprocess_input(sample)
